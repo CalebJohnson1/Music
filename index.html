@@ -6,15 +6,29 @@
     <title>Music Player</title>
 </head>
 <body>
-    <div>
-        <audio id="player" src="Music/AURORA - The Seed.m4a"></audio>
+    <div id="audio-container">
+        <p>Music</p>
+        <audio id="player">
+            <source src="Music/AURORA - The Seed.m4a" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+
+        <script>
+            function playMusic() {
+                var audio = document.getElementById("player");
+                audio.play();
+            }
+            function pauseMusic() {
+                var audio = document.getElementById("player");
+                audio.pause();
+            }
+        </script>
+
+
         <button><img src="" alt="Previous"></button>
-        <button><img src="" alt="Play"></button>
-        <button><img src="" alt="Pause"></button>
+        <button onclick="playMusic()" id="play-btn"><img src="" alt="Play"></button>
+        <button onclick="pauseMusic()"><img src="" alt="Pause"></button>
         <button><img src="" alt="Next"></button>
-    </div>
-    <div>
-        <input type="file" multiple>
     </div>
 </body>
 </html>
