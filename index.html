@@ -4,31 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Music Player</title>
+    <script src="musicPlayer.js"></script>
 </head>
+
 <body>
-    <div id="audio-container">
-        <p>Music</p>
+    <div id="music-container">
         <audio id="player">
             <source src="Music/AURORA - The Seed.m4a" type="audio/mpeg">
             Your browser does not support the audio element.
         </audio>
 
-        <script>
-            function playMusic() {
-                var audio = document.getElementById("player");
-                audio.play();
-            }
-            function pauseMusic() {
-                var audio = document.getElementById("player");
-                audio.pause();
-            }
-        </script>
-
-
         <button><img src="" alt="Previous"></button>
-        <button onclick="playMusic()" id="play-btn"><img src="" alt="Play"></button>
+        <button onclick="playMusic()"><img src="" alt="Play"></button>
         <button onclick="pauseMusic()"><img src="" alt="Pause"></button>
         <button><img src="" alt="Next"></button>
+        <p id="song-title"></p>
     </div>
 </body>
 </html>
