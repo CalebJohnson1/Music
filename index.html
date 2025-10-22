@@ -5,20 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Music Player</title>
     <script src="musicPlayer.js"></script>
-    <link href="src/output.css" rel="stylesheet">
+    <link href="src/styles.css" rel="stylesheet">
 </head>
 
-<body>
+<body class="bg-gray-700 min-h-screen flex items-center justify-center">
     <div id="music-container">
         <audio id="player">
             <source src="Music/AURORA - The Seed.m4a" type="audio/mpeg">
             Your browser does not support the audio element.
         </audio>
-
-        <button>Previous</button>
-        <button onclick="playMusic()">Play</button>
-        <button onclick="pauseMusic()">Pause</button>
-        <button>Next</button>
+        <div class="music-controls">
+            <button>
+                <object data="icons/previousIcon.svg" type="image/svg+xml"></object>
+            </button>
+            <button onclick="playMusic()">
+                <object data="icons/playIcon.svg" type="image/svg+xml" class="pointer-events-none"></object>
+            </button>
+            <button onclick="pauseMusic()">
+                <object data="icons/pauseIcon.svg" type="image/svg+xml" class="pointer-events-none"></object>
+            </button>
+            <button>
+                <object data="icons/nextIcon.svg" type="image/svg+xml"></object>
+            </button>
+        </div>
         <p id="song-title"></p>
         <p id="song-duration"></p>
     </div>
