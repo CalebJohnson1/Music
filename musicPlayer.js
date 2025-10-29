@@ -29,8 +29,8 @@ function playPauseMusic() {
 
 function getAudioDuration() {
     var audio = document.getElementById("player");
-    var durationMinutes = Math.floor((audio.duration) / 60);
-    var durationSeconds = Math.floor((audio.duration) % 60);
+    var durationMinutes = Math.floor((audio.duration) / 60); // Gets the minutes
+    var durationSeconds = Math.floor((audio.duration) % 60); // Gets the seconds
     var durationSecondsStr = durationSeconds < 10 ? "0" + durationSeconds : durationSeconds;
     document.getElementById("song-duration").textContent = durationMinutes + ":" + durationSecondsStr;
 }
@@ -46,6 +46,14 @@ function fileSelect() {
             getAudioDuration();
         });
     });
+}
+
+function testStuff() {
+    var audio = document.getElementById("player");
+    var time = Math.floor(audio.currentTime) % 60; // Gets time only in seconds
+    if (time > 0) {
+        document.getElementById("time").textContent = time;
+    }
 }
 
 window.onload = function() {
