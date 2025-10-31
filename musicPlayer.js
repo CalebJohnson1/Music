@@ -22,6 +22,7 @@ function pauseMusic() {
 function playPauseMusic() {
     if (!isPlaying) {
         playMusic();
+        testForGettingTime();
     } else {
         pauseMusic();
     }
@@ -48,11 +49,15 @@ function fileSelect() {
     });
 }
 
-function testStuff() {
+function testForGettingTime() {
     var audio = document.getElementById("player");
-    var time = Math.floor(audio.currentTime) % 60; // Gets time only in seconds
-    if (time > 0) {
-        document.getElementById("time").textContent = time;
+    var timeSeconds = Math.floor(audio.currentTime) % 60; // Gets the seconds
+    var timeMinutes = Math.floor(Math.floor(audio.currentTime) / 60); // Gets the minutes
+    var timeSecondsStr = timeSeconds < 10 ? "0" + timeSeconds : timeSeconds;
+    document.getElementById("time").textContent = timeMinutes + ":" + timeSecondsStr;
+
+    audio.ontimeupdate = function() {
+        testForGettingTime();
     }
 }
 
