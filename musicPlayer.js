@@ -22,7 +22,7 @@ function pauseMusic() {
 function playPauseMusic() {
     if (!isPlaying) {
         playMusic();
-        testForGettingTime();
+        updateProgress();
     } else {
         pauseMusic();
     }
@@ -45,19 +45,25 @@ function fileSelect() {
         document.getElementById("song-title").textContent = file.name.replace(/\.[^/.]+$/, '');
         audio.addEventListener('loadedmetadata', function() {
             getAudioDuration();
+            var progressBar = document.getElementById("progress-bar");
+            progressBar.max = audio.duration;
+            progressBar.hidden = false;
         });
     });
 }
 
-function testForGettingTime() {
+function updateProgress() {
     var audio = document.getElementById("player");
+    var progressBar = document.getElementById("progress-bar");
+    progressBar.value = audio.currentTime;
+
     var timeSeconds = Math.floor(audio.currentTime) % 60; // Gets the seconds
     var timeMinutes = Math.floor(Math.floor(audio.currentTime) / 60); // Gets the minutes
     var timeSecondsStr = timeSeconds < 10 ? "0" + timeSeconds : timeSeconds;
     document.getElementById("time").textContent = timeMinutes + ":" + timeSecondsStr;
-
+    
     audio.ontimeupdate = function() {
-        testForGettingTime();
+        updateProgress();
     }
 }
 

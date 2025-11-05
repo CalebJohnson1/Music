@@ -32,8 +32,12 @@
             </button>
         </div>
         <p id="song-title"></p>
-        <p id="song-duration"></p>
-        <p id="time"></p>
+        <div class="flex justify-between gap-1">
+            <p id="time"></p>
+            <input type="range" id="progress-bar" min="0" max="100" value="0" step="0.1" 
+                class="w-full accent-[#2A220F]" hidden="true">
+            <p id="song-duration"></p>
+        </div>
     </div>
 </body>
 </html>
