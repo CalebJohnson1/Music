@@ -135,6 +135,15 @@ function audioSeeker() {
     });
 }
 
+function showSettingsList() {
+    var settingsList = document.getElementById("settings-list");
+    if (settingsList.hidden) {
+        settingsList.hidden = false;
+    } else {
+        settingsList.hidden = true;
+    }
+}
+
 window.onload = function() {
     fileSelect();
     audioSeeker();
