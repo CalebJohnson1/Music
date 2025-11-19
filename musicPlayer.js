@@ -73,13 +73,35 @@ function fileSelect() {
 }
 
 function fileSelectTwo() {
-    document.getElementById("audio-input").addEventListener("change", (event) => {
+    document.getElementById("audio-input").addEventListener("change", (e) => {
         let output = document.getElementById("music-file");
-        for (const file of event.target.files) {
-            let item = document.createElement("li");
-            item.textContent = file.webkitRelativePath;
-            output.appendChild(item);
+        for (const file of e.target.files) {
+            const li = document.createElement("li");
+            li.textContent.replace(/\.[^/.]+$/, '');
+            li.textContent = file.webkitRelativePath;
+            output.appendChild(li);
+            li.className = 'px-2 py-2 hover:bg-slate-800 cursor-pointer border-b border-slate-700';
+
+            let audio = document.getElementById("player");
+
             output.hidden = false;
+
+            li.ondblclick = () => {
+                audio.src = URL.createObjectURL(file);
+                document.getElementById("song-title").textContent = file.name.replace(/\.[^/.]+$/, '');
+                playMusic();
+                updateProgress();
+            }
+
+            audio.addEventListener('loadedmetadata', function() {
+            getAudioDuration();
+
+            let progressBar = document.getElementById("progress-bar");
+            progressBar.max = audio.duration;
+            progressBar.removeAttribute('hidden');
+
+            document.getElementById('time').textContent = "0:00";
+            });
         }
     });
 }
