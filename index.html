@@ -5,10 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Music Player</title>
     <script src="musicPlayer.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsmediatags/3.9.5/jsmediatags.min.js"></script>
     <link href="src/styles.css" rel="stylesheet">
 </head>
 
-<body class="bg-slate-900 min-h-screen flex items-center justify-center">
+<body class="bg-slate-900 min-h-screen flex items-center justify-center" style="font-family: neutra-l">
+    <div class="text-white">
+    </div>
     <!-- Settings -->
      <div class="absolute top-2 right-3 text-white">
         <button id="settings-icon" onclick="showSettingsList()">
@@ -25,11 +28,11 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"/><path d="M16 9a5 5 0 0 1 0 6"/><path d="M19.364 18.364a9 9 0 0 0 0-12.728"/></svg>
         </button>
         <input type="range" id="volume-slider" min="0" max="100" value="50"
-            class="accent-[#2A220F]">
+            class="accent-[#c0d4ff]">
     </div>
 
     <!-- Track List -->
-    <ul id="music-file" class="absolute grid justify-items-start left-0 top-0 bottom-0 overflow-y-auto text-white" hidden></ul>
+    <ul id="music-tracks" class="absolute justify-items-start left-0 top-0 bottom-0 overflow-y-auto text-white"></ul>
     
     <!-- Music Player Controls -->
     <div id="music-container" class="absolute bottom-0 items-center justify-center text-white">
@@ -55,7 +58,7 @@
         <div class="flex justify-between gap-1">
             <p id="time"></p>
             <input type="range" id="progress-bar" min="0" max="100" value="0" step="0.1" 
-                class="w-full accent-[#2A220F]" hidden>
+                class="w-full accent-[#c0d4ff]" hidden>
             <p id="song-duration"></p>
         </div>
     </div>

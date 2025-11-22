@@ -20,6 +20,7 @@ function playMusic() {
     isPlaying = true;
     let playPauseBtn = document.getElementById("playPauseButton");
     playPauseBtn.innerHTML = pauseIcon;
+    updateProgress();
 }
 
 function pauseMusic() {
@@ -33,12 +34,12 @@ function pauseMusic() {
 function previousTrack() {
     let audio = document.getElementById("player");
     audio.currentTime = 0;
+    playMusic();
 }
 
 function playPauseMusic() {
     if (!isPlaying) {
         playMusic();
-        updateProgress();
     } else {
         pauseMusic();
     }
@@ -74,34 +75,49 @@ function fileSelect() {
 
 function fileSelectTwo() {
     document.getElementById("audio-input").addEventListener("change", (e) => {
-        let output = document.getElementById("music-file");
+        let output = document.getElementById("music-tracks");
         for (const file of e.target.files) {
             const li = document.createElement("li");
-            li.textContent.replace(/\.[^/.]+$/, '');
-            li.textContent = file.webkitRelativePath;
-            output.appendChild(li);
-            li.className = 'px-2 py-2 hover:bg-slate-800 cursor-pointer border-b border-slate-700';
+            li.className = 'px-2 py-2 hover:bg-slate-800 cursor-pointer border-b border-slate-700 select-none';
+
+            jsmediatags.read(file, {
+                onSuccess: function(tag) {
+                    let title = tag.tags.title || file.name.replace(/\.[^/.]+$/, '');
+                    let artist = tag.tags.artist || '';
+                    let album = tag.tags.album || '';
+
+                    li.textContent = artist + ' - ' + title;
+                },
+                onError: function(error) {
+                    li.textContent = file.name.replace(/\.[^/.]+$/, '');
+                }
+            })
 
             let audio = document.getElementById("player");
-
             output.hidden = false;
 
             li.ondblclick = () => {
+                let items = document.querySelectorAll('#music-tracks li');
+                items.forEach(function(item) {
+                    item.classList.remove('changeColor');
+                });
+
                 audio.src = URL.createObjectURL(file);
                 document.getElementById("song-title").textContent = file.name.replace(/\.[^/.]+$/, '');
+                li.classList.add('changeColor');
                 playMusic();
-                updateProgress();
             }
 
             audio.addEventListener('loadedmetadata', function() {
-            getAudioDuration();
+                getAudioDuration();
 
-            let progressBar = document.getElementById("progress-bar");
-            progressBar.max = audio.duration;
-            progressBar.removeAttribute('hidden');
+                let progressBar = document.getElementById("progress-bar");
+                progressBar.max = audio.duration;
+                progressBar.removeAttribute('hidden');
 
-            document.getElementById('time').textContent = "0:00";
+                document.getElementById('time').textContent = "0:00";
             });
+            output.appendChild(li);
         }
     });
 }
