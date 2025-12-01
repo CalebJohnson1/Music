@@ -76,20 +76,31 @@ function fileSelect() {
 function fileSelectTwo() {
     document.getElementById("audio-input").addEventListener("change", (e) => {
         let output = document.getElementById("music-tracks");
+        output.innerHTML = '';
+
         for (const file of e.target.files) {
             const li = document.createElement("li");
             li.className = 'px-2 py-2 hover:bg-slate-800 cursor-pointer border-b border-slate-700 select-none';
 
             jsmediatags.read(file, {
                 onSuccess: function(tag) {
-                    let title = tag.tags.title || file.name.replace(/\.[^/.]+$/, '');
-                    let artist = tag.tags.artist || '';
-                    let album = tag.tags.album || '';
-
-                    li.textContent = artist + ' - ' + title;
+                    let tags = tag.tags;
+                    let title = tags.title || file.name.replace(/\.[^/.]+$/, '');
+                    let artist = tags.artist || '';
+                    let album = tags.album || '';
+                    //let genre = tags.genre || 'Unknown Genre';
+                    if (artist !== '') {
+                        li.textContent = artist + ' - ' + title;
+                        document.getElementById("song-title").textContent = `${artist} - ${title}`;
+                        document.getElementById("album-name").textContent = album;
+                    } else {
+                        li.textContent = title;
+                        document.getElementById("song-title").textContent = title;
+                    }
                 },
                 onError: function(error) {
                     li.textContent = file.name.replace(/\.[^/.]+$/, '');
+                    document.getElementById("song-title").textContent = file.name.replace(/\.[^/.]+$/, '');
                 }
             })
 
@@ -103,7 +114,8 @@ function fileSelectTwo() {
                 });
 
                 audio.src = URL.createObjectURL(file);
-                document.getElementById("song-title").textContent = file.name.replace(/\.[^/.]+$/, '');
+                document.getElementById("song-title").hidden = false;
+                document.getElementById("album-name").hidden = false;
                 li.classList.add('changeColor');
                 playMusic();
             }
