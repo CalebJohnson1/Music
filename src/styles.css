@@ -283,6 +283,8 @@
 @font-face {
   font-family: 'neutra-l';
   src: url("C:\Users\caleb\Documents\fonts\Neutra\neutra-text-light.otf");
+  font-family: 'line-seed-neu';
+  src: url("C:\Users\caleb\Documents\fonts\LINE_Seed_Sans_EN\LINE_Seed_Sans_V1.003\Desktop\OTF\LINESeedSans_Rg.otf");
 }
 .music-controls object {
   pointer-events: none;

@@ -87,20 +87,11 @@ function fileSelectTwo() {
                     let tags = tag.tags;
                     let title = tags.title || file.name.replace(/\.[^/.]+$/, '');
                     let artist = tags.artist || '';
-                    let album = tags.album || '';
-                    //let genre = tags.genre || 'Unknown Genre';
-                    if (artist !== '') {
-                        li.textContent = artist + ' - ' + title;
-                        document.getElementById("song-title").textContent = `${artist} - ${title}`;
-                        document.getElementById("album-name").textContent = album;
-                    } else {
-                        li.textContent = title;
-                        document.getElementById("song-title").textContent = title;
-                    }
+
+                    artist !== '' ? li.textContent = `${artist} - ${title}` : li.textContent = title;
                 },
                 onError: function(error) {
                     li.textContent = file.name.replace(/\.[^/.]+$/, '');
-                    document.getElementById("song-title").textContent = file.name.replace(/\.[^/.]+$/, '');
                 }
             })
 
@@ -114,9 +105,30 @@ function fileSelectTwo() {
                 });
 
                 audio.src = URL.createObjectURL(file);
-                document.getElementById("song-title").hidden = false;
-                document.getElementById("album-name").hidden = false;
                 li.classList.add('changeColor');
+
+                jsmediatags.read(file, {
+                    onSuccess: function(tag) {
+                        let tags = tag.tags;
+                        let title = tags.title || file.name.replace(/\.[^/.]+$/, '');
+                        let artist = tags.artist || '';
+                        let album = tags.album || '';
+                        
+                        artist !== '' 
+                        ? document.getElementById("song-title").textContent = `${artist} - ${title}`
+                        : document.getElementById("song-title").textContent = title;
+
+                        document.getElementById("album-name").textContent = album;
+                        document.getElementById("song-title").hidden = false;
+                        document.getElementById("album-name").hidden = false;
+                    },
+                    onError: function(error) {
+                        document.getElementById("song-title").textContent = file.name.replace(/\.[^/.]+$/, '');
+                        document.getElementById("album-name").textContent = '';
+                        document.getElementById("song-title").hidden = false;
+                        document.getElementById("album-name").hidden = false;
+                    }
+                });
                 playMusic();
             }
 
@@ -180,11 +192,8 @@ function muteAudio() {
     } else {
         audio.volume = previousVolume;
         volumeSlider.value = previousVolume * 100;
-        if (previousVolume < 0.5) {
-            volumeIcon.innerHTML = volumeLowIcon;
-        } else {
-            volumeIcon.innerHTML = volumeHighIcon;
-        }
+
+        previousVolume < 0.5 ? volumeIcon.innerHTML = volumeLowIcon : volumeIcon.innerHTML = volumeHighIcon;
     }
 }
 
@@ -199,11 +208,7 @@ function audioSeeker() {
 
 function showSettingsList() {
     let settingsList = document.getElementById("settings-list");
-    if (settingsList.hidden) {
-        settingsList.hidden = false;
-    } else {
-        settingsList.hidden = true;
-    }
+    settingsList.hidden ? settingsList.hidden = false : settingsList.hidden = true;
 }
 
 window.onload = function() {
