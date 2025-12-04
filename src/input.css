@@ -15,6 +15,10 @@ button {
     cursor: pointer;
 }
 
+button:hover {
+    scale: 1.05;
+}
+
 .changeColor {
     color: #c0d4ff;
 }

@@ -38,11 +38,7 @@ function previousTrack() {
 }
 
 function playPauseMusic() {
-    if (!isPlaying) {
-        playMusic();
-    } else {
-        pauseMusic();
-    }
+    !isPlaying ? playMusic() : pauseMusic();
 }
 
 function getAudioDuration() {
@@ -113,20 +109,27 @@ function fileSelectTwo() {
                         let title = tags.title || file.name.replace(/\.[^/.]+$/, '');
                         let artist = tags.artist || '';
                         let album = tags.album || '';
+                        let picture = tags.picture;
+
+                        // Extracting the cover from the audio file
+                        const data = picture.data;
+                        const format = picture.format;
+                        let base64String = "";
+                        for (let i = 0; i < data.length; i++) {
+                            base64String += String.fromCharCode(data[i]);
+                        }
+                        document.getElementById("album-cover").src = `data:${format};base64,${window.btoa(base64String)}`;
+                        document.getElementById("album-cover").hidden = false;
                         
                         artist !== '' 
                         ? document.getElementById("song-title").textContent = `${artist} - ${title}`
                         : document.getElementById("song-title").textContent = title;
 
                         document.getElementById("album-name").textContent = album;
-                        document.getElementById("song-title").hidden = false;
-                        document.getElementById("album-name").hidden = false;
                     },
                     onError: function(error) {
                         document.getElementById("song-title").textContent = file.name.replace(/\.[^/.]+$/, '');
                         document.getElementById("album-name").textContent = '';
-                        document.getElementById("song-title").hidden = false;
-                        document.getElementById("album-name").hidden = false;
                     }
                 });
                 playMusic();
@@ -168,15 +171,10 @@ function handleVolumeSlider() {
 
     volumeSlider.addEventListener('input', function() {
         audio.volume = volumeSlider.value / 100;
-        if ((volumeSlider.value == 0)) {
-            volumeIcon.innerHTML = mutedIcon;
-        }
-        else if ((volumeSlider.value) < 50) {
-            volumeIcon.innerHTML = volumeLowIcon;
-        } else {
-            volumeIcon.innerHTML = volumeHighIcon;
-        }
-    });
+        volumeSlider.value == 0 ? volumeIcon.innerHTML = mutedIcon :
+            volumeSlider.value < 50 ? volumeIcon.innerHTML = volumeLowIcon : volumeIcon.innerHTML = volumeHighIcon;
+    }
+    );
 }
 
 function muteAudio() {
