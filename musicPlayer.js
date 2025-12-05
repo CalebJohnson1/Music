@@ -109,25 +109,29 @@ function fileSelectTwo() {
                         let title = tags.title || file.name.replace(/\.[^/.]+$/, '');
                         let artist = tags.artist || '';
                         let album = tags.album || '';
-                        let picture = tags.picture;
+                        let picture = tags.picture || '';
 
                         // Extracting the cover from the audio file
-                        const data = picture.data;
-                        const format = picture.format;
-                        let base64String = "";
+                        const data = picture.data || '';
+                        const format = picture.format || '';
+                        let base64String = "" || '';
                         for (let i = 0; i < data.length; i++) {
                             base64String += String.fromCharCode(data[i]);
                         }
-                        document.getElementById("album-cover").src = `data:${format};base64,${window.btoa(base64String)}`;
-                        document.getElementById("album-cover").hidden = false;
+                        picture != '' 
+                        ? document.getElementById("album-cover").src = `data:${format};base64,${window.btoa(base64String)}`
+                        : document.getElementById("album-cover").src = '';
+                        picture != ''
+                        ? document.getElementById("album-cover").hidden = false
+                        : document.getElementById("album-cover").hidden = true;
                         
-                        artist !== '' 
+                        artist !== ''
                         ? document.getElementById("song-title").textContent = `${artist} - ${title}`
                         : document.getElementById("song-title").textContent = title;
 
                         document.getElementById("album-name").textContent = album;
                     },
-                    onError: function(error) {
+                    onError: function(e) {
                         document.getElementById("song-title").textContent = file.name.replace(/\.[^/.]+$/, '');
                         document.getElementById("album-name").textContent = '';
                     }
