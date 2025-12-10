@@ -31,14 +31,14 @@ function pauseMusic() {
     playPauseBtn.innerHTML = playIcon;
 }
 
+function playPauseMusic() {
+    !isPlaying ? playMusic() : pauseMusic();
+}
+
 function previousTrack() {
     let audio = document.getElementById("player");
     audio.currentTime = 0;
     playMusic();
-}
-
-function playPauseMusic() {
-    !isPlaying ? playMusic() : pauseMusic();
 }
 
 function getAudioDuration() {
@@ -49,27 +49,56 @@ function getAudioDuration() {
     document.getElementById("song-duration").textContent = durationMinutes + ":" + durationSecondsStr;
 }
 
-function fileSelect() {
-    let audioInput = document.getElementById("audio-input");
-    audioInput.addEventListener('change', function(e) {
-        let file = e.target.files[0];
-        let audio = document.getElementById('player');
-        audio.src = URL.createObjectURL(file);
-        document.getElementById("song-title").textContent = file.name.replace(/\.[^/.]+$/, '');
-        
-        audio.addEventListener('loadedmetadata', function() {
-            getAudioDuration();
+// TODO - Shuffle function here
 
-            let progressBar = document.getElementById("progress-bar");
-            progressBar.max = audio.duration;
-            progressBar.removeAttribute('hidden');
-
-            document.getElementById('time').textContent = "0:00";
-        });
+function extractMetaData(file, li) {
+    let audio = document.getElementById("player");
+    let items = document.querySelectorAll('#music-tracks li');
+    items.forEach(function(item) {
+        item.classList.remove('changeColor');
     });
+
+    audio.src = URL.createObjectURL(file);
+    li.classList.add('changeColor');
+
+    jsmediatags.read(file, {
+        onSuccess: function(tag) {
+            let tags = tag.tags;
+            let title = tags.title || file.name.replace(/\.[^/.]+$/, '');
+            let artist = tags.artist || '';
+            let album = tags.album || '';
+            let picture = tags.picture || '';
+
+            // Extracting the cover from the audio file
+            const data = picture.data || '';
+            const format = picture.format || '';
+            let base64String = "" || '';
+            for (let i = 0; i < data.length; i++) {
+                base64String += String.fromCharCode(data[i]);
+            }
+
+            picture != '' 
+            ? document.getElementById("album-cover").src = `data:${format};base64,${window.btoa(base64String)}`
+            : document.getElementById("album-cover").src = '';
+            picture != ''
+            ? document.getElementById("album-cover").hidden = false
+            : document.getElementById("album-cover").hidden = true;
+            
+            artist !== ''
+            ? document.getElementById("song-title").textContent = `${artist} - ${title}`
+            : document.getElementById("song-title").textContent = title;
+
+            document.getElementById("album-name").textContent = album;
+        },
+        onError: function(e) {
+            document.getElementById("song-title").textContent = file.name.replace(/\.[^/.]+$/, '');
+            document.getElementById("album-name").textContent = '';
+        }
+    });
+    playMusic();
 }
 
-function fileSelectTwo() {
+function fileSelect() {
     document.getElementById("audio-input").addEventListener("change", (e) => {
         let output = document.getElementById("music-tracks");
         output.innerHTML = '';
@@ -95,48 +124,7 @@ function fileSelectTwo() {
             output.hidden = false;
 
             li.ondblclick = () => {
-                let items = document.querySelectorAll('#music-tracks li');
-                items.forEach(function(item) {
-                    item.classList.remove('changeColor');
-                });
-
-                audio.src = URL.createObjectURL(file);
-                li.classList.add('changeColor');
-
-                jsmediatags.read(file, {
-                    onSuccess: function(tag) {
-                        let tags = tag.tags;
-                        let title = tags.title || file.name.replace(/\.[^/.]+$/, '');
-                        let artist = tags.artist || '';
-                        let album = tags.album || '';
-                        let picture = tags.picture || '';
-
-                        // Extracting the cover from the audio file
-                        const data = picture.data || '';
-                        const format = picture.format || '';
-                        let base64String = "" || '';
-                        for (let i = 0; i < data.length; i++) {
-                            base64String += String.fromCharCode(data[i]);
-                        }
-                        picture != '' 
-                        ? document.getElementById("album-cover").src = `data:${format};base64,${window.btoa(base64String)}`
-                        : document.getElementById("album-cover").src = '';
-                        picture != ''
-                        ? document.getElementById("album-cover").hidden = false
-                        : document.getElementById("album-cover").hidden = true;
-                        
-                        artist !== ''
-                        ? document.getElementById("song-title").textContent = `${artist} - ${title}`
-                        : document.getElementById("song-title").textContent = title;
-
-                        document.getElementById("album-name").textContent = album;
-                    },
-                    onError: function(e) {
-                        document.getElementById("song-title").textContent = file.name.replace(/\.[^/.]+$/, '');
-                        document.getElementById("album-name").textContent = '';
-                    }
-                });
-                playMusic();
+                extractMetaData(file, li);
             }
 
             audio.addEventListener('loadedmetadata', function() {
@@ -214,7 +202,7 @@ function showSettingsList() {
 }
 
 window.onload = function() {
-    fileSelectTwo();
+    fileSelect();
     audioSeeker();
     handleVolumeSlider();
 
