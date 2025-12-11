@@ -211,6 +211,9 @@
   .w-full {
     width: 100%;
   }
+  .max-w-80 {
+    max-width: calc(var(--spacing) * 80);
+  }
   .min-w-\[150px\] {
     min-width: 150px;
   }
