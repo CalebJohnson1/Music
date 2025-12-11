@@ -9,7 +9,7 @@
     <link href="styles.css" rel="stylesheet">
 </head>
 
-<body class="bg-slate-900 min-h-screen flex items-center justify-center" style="font-family: neutra-l">
+<body class="bg-slate-900 min-h-screen flex items-center justify-center text-white" style="font-family: neutra-l">
     <!-- Settings -->
      <div class="absolute top-2 right-3 text-white">
         <button id="settings-icon" onclick="showSettingsList()">
@@ -30,8 +30,13 @@
     </div>
 
     <!-- Track List -->
-    <ul id="music-tracks" class="absolute left-0 top-0 bottom-0 overflow-y-auto text-white max-w-80"></ul>
-    
+    <div class="absolute top-0 left-0 border-r">
+        <div class="w-80 h-screen overflow-y-auto no-scrollbar">
+            <h1 class="border-b cursor-pointer" onclick="hideTracks()">Music Tracks</h1>
+            <ul id="music-tracks" class=""></ul>
+        </div>
+    </div>
+
     <!-- Music Player Controls -->
     <div id="music-container" class="absolute bottom-0 text-white">
         <input type="file" accept="audio/*" id="audio-input" hidden webkitdirectory multiple>

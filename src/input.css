@@ -5,6 +5,16 @@
     src: url("C:\Users\caleb\Documents\fonts\Neutra\neutra-text-light.otf");
 }
 
+@layer utilities {
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+    .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+}
+
 .music-controls object {
     pointer-events: none;
     width: 24px;
