@@ -1,7 +1,7 @@
 {
   "name": "music",
   "version": "1.0.0",
-  "main": "musicPlayer.js",
+  "main": "dist/tsPlayer.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "npx @tailwindcss/cli -i src/input.css -o src/styles.css --watch"
@@ -15,5 +15,8 @@
     "music-metadata": "^11.10.2",
     "tailwindcss": "^4.1.14",
     "typescript": "^5.9.3"
+  },
+  "devDependencies": {
+    "@types/jsmediatags": "^3.9.6"
   }
 }

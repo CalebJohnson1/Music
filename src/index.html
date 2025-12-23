@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Music Player</title>
-    <script src="musicPlayer.js"></script>
+    <script src="../dist/musicPlayer.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jsmediatags/3.9.5/jsmediatags.min.js"></script>
     <link href="styles.css" rel="stylesheet">
 </head>
@@ -32,7 +32,7 @@
     <!-- Track List -->
     <div class="absolute top-0 left-0 border-r">
         <div class="w-80 h-screen overflow-y-auto no-scrollbar">
-            <h1 class="border-b cursor-pointer" onclick="hideTracks()">Music Tracks</h1>
+            <h1 class="border-b" onclick="hideTracks()">Music Tracks</h1>
             <ul id="music-tracks" class=""></ul>
         </div>
     </div>
