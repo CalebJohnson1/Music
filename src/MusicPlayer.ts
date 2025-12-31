@@ -2,6 +2,7 @@
 TODO
 Play next song after one ends
 Shuffle Function
+Double click image to open a wide image w/ more artist info, genre, etc.
 */
 
 declare const jsmediatags: any;
@@ -36,15 +37,19 @@ function playPauseMusic() {
     !isPlaying ? playMusic() : pauseMusic();
 }
 
-function previousTrack() {
+function playPreviousTrack() {
     const audio = document.getElementById("player") as HTMLAudioElement;
     audio.currentTime = 0;
     playMusic();
 }
 
+function playNextTrack() {
+    const audio = document.getElementById("player") as HTMLAudioElement;
+}
+
 function getAudioDuration() {
     const audio = document.getElementById("player") as HTMLAudioElement;
-    const duration: HTMLElement = document.getElementById("song-duration")!;
+    const duration = document.getElementById("song-duration") as HTMLElement;
     const durationMinutes = Math.floor((audio.duration) / 60);
     const durationSeconds = Math.floor((audio.duration) % 60);
     const durationSecondsStr = durationSeconds < 10 ? "0" + durationSeconds : durationSeconds;

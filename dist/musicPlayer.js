@@ -3,6 +3,7 @@
 TODO
 Play next song after one ends
 Shuffle Function
+Double click image to open a wide image w/ more artist info, genre, etc.
 */
 let isPlaying = false;
 let previousVolume = 0.5;
@@ -29,10 +30,13 @@ function pauseMusic() {
 function playPauseMusic() {
     !isPlaying ? playMusic() : pauseMusic();
 }
-function previousTrack() {
+function playPreviousTrack() {
     const audio = document.getElementById("player");
     audio.currentTime = 0;
     playMusic();
+}
+function playNextTrack() {
+    const audio = document.getElementById("player");
 }
 function getAudioDuration() {
     const audio = document.getElementById("player");
