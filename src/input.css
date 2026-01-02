@@ -1,34 +1,34 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @font-face {
-    font-family: 'neutra-l';
-    src: url("C:\Users\caleb\Documents\fonts\Neutra\neutra-text-light.otf");
+  font-family: 'neutra-l';
+  src: url('C:\Users\caleb\Documents\fonts\Neutra\neutra-text-light.otf');
 }
 
 @layer utilities {
-    .no-scrollbar::-webkit-scrollbar {
-        display: none;
-    }
-    .no-scrollbar {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-    }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }
 
 .music-controls object {
-    pointer-events: none;
-    width: 24px;
-    height: 24px;
+  pointer-events: none;
+  width: 24px;
+  height: 24px;
 }
 
 button {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 button:hover {
-    scale: 1.05;
+  scale: 1.05;
 }
 
 .changeColor {
-    color: #c0d4ff;
+  color: #c0d4ff;
 }
