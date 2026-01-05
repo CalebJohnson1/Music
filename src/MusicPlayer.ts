@@ -8,6 +8,8 @@ Double click image to open a wide image w/ more artist info, genre, etc.
 declare const jsmediatags: any;
 let isPlaying = false;
 let previousVolume = 0.5;
+let playlist: File[] = [];
+let songIndex = 0;
 
 const playIcon =
   '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"/></svg>';
@@ -46,14 +48,26 @@ function playPauseMusic() {
   !isPlaying ? playMusic() : pauseMusic();
 }
 
-function playPreviousTrack() {
+function playPreviousSong() {
   const audio = document.getElementById('player') as HTMLAudioElement;
   audio.currentTime = 0;
   playMusic();
 }
 
-function playNextTrack() {
+function playNextSong() {
+  songIndex++;
+  if (songIndex >= playlist.length) {
+    songIndex = 0;
+  }
+  const nextFile = playlist[songIndex];
+  const tracks = document.querySelectorAll('#music-tracks li');
+  extractMetaData(nextFile as File, tracks[songIndex] as HTMLElement);
+}
+
+function repeatSong() {
   const audio = document.getElementById('player') as HTMLAudioElement;
+  audio.currentTime = 0;
+  playMusic();
 }
 
 function getAudioDuration() {
@@ -127,6 +141,7 @@ function fileSelect() {
     musicTracksLayout.innerHTML = '';
 
     for (const file of target.files) {
+      playlist.push(file);
       const track = document.createElement('li');
       track.className =
         'px-2 py-2 hover:bg-slate-800 cursor-pointer border-b border-slate-700 select-none';
@@ -151,6 +166,7 @@ function fileSelect() {
 
       track.ondblclick = () => {
         extractMetaData(file, track);
+        songIndex = playlist.indexOf(file);
       };
 
       audio.addEventListener('loadedmetadata', function () {
@@ -254,6 +270,12 @@ function showSettingsList() {
     : (settingsList.hidden = true);
 }
 
+function enlargeElements() {
+  const title = document.getElementById('song-title') as HTMLElement;
+  const albumName = document.getElementById('album-name') as HTMLElement;
+  const albumCover = document.getElementById('album-cover') as HTMLImageElement;
+}
+
 function getKeyboardInputs() {
   const audio = document.getElementById('player') as HTMLAudioElement;
   document.addEventListener('keydown', (e) => {
@@ -283,4 +305,8 @@ window.onload = function () {
     'volume-slider',
   ) as HTMLInputElement;
   audio.volume = Number(volumeSlider.value) / 100;
+
+  audio.addEventListener('ended', () => {
+    playNextSong();
+  });
 };

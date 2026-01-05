@@ -15,6 +15,22 @@
   }
 }
 
+input[type='range'] {
+  appearance: none;
+  &::-moz-range-progress {
+    height: 10px;
+    background-color: #c0d4ff;
+  }
+  &::-moz-range-track {
+    height: 10px;
+    background-color: gray;
+  }
+  &::-moz-range-thumb {
+    height: 15px;
+    width: 0.1%;
+  }
+}
+
 .music-controls object {
   pointer-events: none;
   width: 24px;

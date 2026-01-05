@@ -63,14 +63,7 @@
           <path d="M19.364 18.364a9 9 0 0 0 0-12.728" />
         </svg>
       </button>
-      <input
-        type="range"
-        id="volume-slider"
-        min="0"
-        max="100"
-        value="50"
-        class="accent-[#c0d4ff]"
-      />
+      <input type="range" id="volume-slider" min="0" max="100" value="50" />
     </div>
 
     <!-- Track List -->
@@ -171,17 +164,9 @@
       <p id="song-title"></p>
       <p id="album-name"></p>
       <div class="flex justify-between gap-1">
-        <img id="album-cover" alt="" class="w-18 h-18 rounded left-2" hidden />
+        <img id="album-cover" alt="" class="w-18 h-18 left-50 rounded" hidden />
         <p id="time"></p>
-        <input
-          type="range"
-          id="progress-bar"
-          min="0"
-          max="100"
-          value="0"
-          step="0.1"
-          class="w-full accent-[#c0d4ff]"
-        />
+        <input type="range" id="progress-bar" min="0" max="100" value="0" />
         <p id="song-duration"></p>
       </div>
     </div>
