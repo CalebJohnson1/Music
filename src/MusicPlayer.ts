@@ -1,6 +1,6 @@
 /*
 TODO
-Play next song after one ends
+Play next song after one ends - DONE
 Shuffle Function
 Double click image to open a wide image w/ more artist info, genre, etc.
 */
@@ -60,14 +60,8 @@ function playNextSong() {
     songIndex = 0;
   }
   const nextFile = playlist[songIndex];
-  const tracks = document.querySelectorAll('#music-tracks li');
-  extractMetaData(nextFile as File, tracks[songIndex] as HTMLElement);
-}
-
-function repeatSong() {
-  const audio = document.getElementById('player') as HTMLAudioElement;
-  audio.currentTime = 0;
-  playMusic();
+  const song = document.querySelectorAll('#music-tracks li');
+  extractMetaData(nextFile as File, song[songIndex] as HTMLElement);
 }
 
 function getAudioDuration() {

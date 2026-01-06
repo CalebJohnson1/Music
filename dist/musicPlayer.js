@@ -1,7 +1,7 @@
 "use strict";
 /*
 TODO
-Play next song after one ends
+Play next song after one ends - DONE
 Shuffle Function
 Double click image to open a wide image w/ more artist info, genre, etc.
 */
@@ -43,13 +43,8 @@ function playNextSong() {
         songIndex = 0;
     }
     const nextFile = playlist[songIndex];
-    const tracks = document.querySelectorAll('#music-tracks li');
-    extractMetaData(nextFile, tracks[songIndex]);
-}
-function repeatSong() {
-    const audio = document.getElementById('player');
-    audio.currentTime = 0;
-    playMusic();
+    const song = document.querySelectorAll('#music-tracks li');
+    extractMetaData(nextFile, song[songIndex]);
 }
 function getAudioDuration() {
     const audio = document.getElementById('player');

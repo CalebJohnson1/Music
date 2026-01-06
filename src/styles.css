@@ -308,13 +308,24 @@
 }
 input[type='range'] {
   appearance: none;
-  &::-moz-range-progress {
+  &::-webkit-slider-runnable-track {
+    overflow: hidden;
     height: 10px;
-    background-color: #c0d4ff;
+    background-color: gray;
+    margin-top: -1px;
+  }
+  &::-webkit-slider-thumb {
+    width: 1%;
+    -webkit-appearance: none;
+    box-shadow: -100px 0 0 100px #c0d4ff;
   }
   &::-moz-range-track {
     height: 10px;
     background-color: gray;
+  }
+  &::-moz-range-progress {
+    height: 10px;
+    background-color: #c0d4ff;
   }
   &::-moz-range-thumb {
     height: 15px;
