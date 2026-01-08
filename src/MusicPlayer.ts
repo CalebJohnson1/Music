@@ -50,8 +50,17 @@ function playPauseMusic() {
 
 function playPreviousSong() {
   const audio = document.getElementById('player') as HTMLAudioElement;
-  audio.currentTime = 0;
-  playMusic();
+  if (audio.currentTime > 3) {
+    audio.currentTime = 0;
+    return;
+  }
+  songIndex--;
+  if (songIndex < 0) {
+    songIndex = 0;
+  }
+  const nextFile = playlist[songIndex];
+  const song = document.querySelectorAll('#music-tracks li');
+  extractMetaData(nextFile as File, song[songIndex] as HTMLElement);
 }
 
 function playNextSong() {
@@ -138,7 +147,7 @@ function fileSelect() {
       playlist.push(file);
       const track = document.createElement('li');
       track.className =
-        'px-2 py-2 hover:bg-slate-800 cursor-pointer border-b border-slate-700 select-none';
+        'hover:bg-slate-800 cursor-pointer border-b border-slate-700 select-none';
 
       jsmediatags.read(file, {
         onSuccess: function (tag: any) {
@@ -268,6 +277,8 @@ function enlargeElements() {
   const title = document.getElementById('song-title') as HTMLElement;
   const albumName = document.getElementById('album-name') as HTMLElement;
   const albumCover = document.getElementById('album-cover') as HTMLImageElement;
+
+  albumCover.className = 'absolute left-90 bottom-60 w-100 h-100 rounded';
 }
 
 function getKeyboardInputs() {
